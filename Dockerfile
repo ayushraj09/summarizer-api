@@ -15,7 +15,7 @@ COPY app /summarizer_api/app
 COPY client_secrets.json /summarizer_api/client_secrets.json
 
 # Set the environment variable for Google Application Credentials
-ENV GOOGLE_APPLICATION_CREDENTIALS="/summarizer_api/client_secrets.json"
+#ENV GOOGLE_APPLICATION_CREDENTIALS="/summarizer_api/client_secrets.json"
 
 # Download the model files
 RUN python app/download.py
