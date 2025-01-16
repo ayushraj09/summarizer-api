@@ -1,0 +1,13 @@
+.git
+.gitignore
+.gcloudignore
+.DS_Store
+*.env
+venv/
+env/
+*.log
+__pycache__/
+.ipynb_checkpoints/
+dist/
+build/
+*.cache/

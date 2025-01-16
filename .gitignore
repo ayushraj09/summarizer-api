@@ -1,0 +1,7 @@
+__pycache__/
+dist/
+build/
+*.cache/
+.DS_Store
+app/saved_model/*
+client_secrets.json
