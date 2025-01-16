@@ -12,7 +12,7 @@ RUN pip install uvicorn
 
 # Copy the application code and client_secrets.json file
 COPY app /summarizer_api/app
-COPY client_secrets.json /summarizer_api/client_secrets.json
+#COPY client_secrets.json /summarizer_api/client_secrets.json
 
 # Set the environment variable for Google Application Credentials
 #ENV GOOGLE_APPLICATION_CREDENTIALS="/summarizer_api/client_secrets.json"
