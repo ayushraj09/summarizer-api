@@ -6,7 +6,7 @@ A machine learning model that generates concise summaries of email threads using
 
 - **Base Model**: facebook/bart-large-cnn
 - **Fine-tuned On**: Email Summary Dataset (xprilion/email-summary-dataset)
-- ** Training Infrastructure
+- **Training Infrastructure:**
   The model was trained using the following setup:
   - Computing Platform: Kaggle Notebooks
   - Hardware: 2x NVIDIA Tesla T4 GPUs
@@ -68,50 +68,6 @@ The model is deployed as a FastAPI service with the following features:
 - Error handling for invalid inputs
 
 ## Deployment
-
-### Docker Deployment
-
-The application can be containerized using Docker with a multi-stage build process for optimized image size:
-
-```dockerfile
-# First stage: install dependencies
-FROM python:3.10-slim AS build
-WORKDIR /summarizer_api
-# Copy and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-# Install uvicorn
-RUN pip install uvicorn
-# Copy the application code and client_secrets.json file
-COPY app /summarizer_api/app
-COPY client_secrets.json /summarizer_api/client_secrets.json
-# Set the environment variable for Google Application Credentials
-ENV GOOGLE_APPLICATION_CREDENTIALS="/summarizer_api/client_secrets.json"
-# Download the model files
-RUN python app/download.py
-
-# Second stage: create a clean image
-FROM python:3.10-slim
-WORKDIR /summarizer_api
-# Copy the installed dependencies from the build stage
-COPY --from=build /usr/local/lib/python3.10 /usr/local/lib/python3.10
-COPY --from=build /usr/local/bin /usr/local/bin
-# Copy the application code and required files
-COPY --from=build /summarizer_api /summarizer_api
-# Expose port 8080
-EXPOSE 8080
-# Start the FastAPI app with uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
-```
-
-To build and run the Docker container:
-```bash
-# Build the Docker image
-docker build -t email-summarizer .
-
-# Run the container
-docker run -p 8080:8080 email-summarizer
-```
 
 ### GCP Deployment
 The model is deployed on Google Cloud Platform with the following components:
